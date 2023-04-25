@@ -77,12 +77,12 @@ public class OpenExitFound : MonoBehaviour
     {
         if (lookingAt.exit == Chosen.exit)
         {
-            buttonText.text = "Se tætteste";
+            buttonText.text = "Se dit valg";
             lookingAt = Closest;
         }
         else
         {
-            buttonText.text = "Se dit valg";
+            buttonText.text = "Se tætteste";
             lookingAt = Chosen;
         }
         
