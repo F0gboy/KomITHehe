@@ -64,14 +64,14 @@ public class CameraRotation : MonoBehaviour
     {
         Vector3 offset = transform.position - target.position;
         offset = offset.normalized * minDistance;
-        transform.position = target.position + offset;
+        transform.position = target.position + offset * (Time.deltaTime * moveSpeed);
     }
 
     void MoveAwayFromTarget()
     {
         Vector3 offset = transform.position - target.position;
         offset = offset.normalized * (minDistance + zoom);
-        transform.position = target.position + offset;
+        transform.position = target.position + offset * (Time.deltaTime * moveSpeed);
     }
 
     public void MoveToNextTarget()

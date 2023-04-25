@@ -31,7 +31,7 @@ public class OpenExitFound : MonoBehaviour
         SetUiState(false);
     }
     
-    private void SetUiState(bool state)
+    public void SetUiState(bool state)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -73,16 +73,22 @@ public class OpenExitFound : MonoBehaviour
         }
     }
 
+    public void StopSpin()
+    {
+        playerCam.gameObject.SetActive(true);
+        exitCam.gameObject.SetActive(false);
+    }
+
     public void ButtonPress()
     {
         if (lookingAt.exit == Chosen.exit)
         {
-            buttonText.text = "Se dit valg";
+            buttonText.text = "Se tætteste";
             lookingAt = Closest;
         }
         else
         {
-            buttonText.text = "Se tætteste";
+            buttonText.text = "Se dit valg";
             lookingAt = Chosen;
         }
         

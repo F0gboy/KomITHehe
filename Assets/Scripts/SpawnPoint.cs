@@ -11,6 +11,8 @@ public class SpawnPoint : MonoBehaviour
     public GameObject[] SpawnPoints;
     
     [SerializeField] private GameObject Player;
+    
+    private OpenExitFound _openExitFound;
 
     public static Vector3 spawnPosition { get; private set; } = Vector3.zero;
 
@@ -19,9 +21,11 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _openExitFound = FindObjectOfType<OpenExitFound>();
         _blockadeController = FindObjectOfType<BlockadeController>();
 
         Player.transform.position = RandomSpawnPoint();
+        _blockadeController.StartCreateObstacles();
     }
 
     // Update is called once per frame
@@ -30,6 +34,19 @@ public class SpawnPoint : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K)) Player.transform.position = RandomSpawnPoint();
     }
 
+    public void RestartLevel()
+    {
+        _openExitFound.SetUiState(false);
+        Player.GetComponent<FirstPersonController>().enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
+        _openExitFound.StopSpin();
+        
+        Player.transform.position = RandomSpawnPoint();
+        _blockadeController.StartCreateObstacles();
+    }
+    
     private Vector3 RandomSpawnPoint()
     {
        var ChosenSpawn = Random.Range(0, SpawnPoints.Length);

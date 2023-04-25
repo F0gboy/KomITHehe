@@ -16,7 +16,7 @@ public class ExitDetector : MonoBehaviour
     {
         if (other.CompareTag("ExitBox"))
         {
-            _openExitFound.OpenUi(BlockadeController.closestExit, BlockadeController.GetDistance(other.transform.parent.gameObject));
+            _openExitFound.OpenUi(BlockadeController.closestExit, BlockadeController.GetDistance(other.transform.gameObject));
 
             GetComponent<FirstPersonController>().enabled = false;
         }
