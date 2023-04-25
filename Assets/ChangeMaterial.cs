@@ -29,6 +29,7 @@ public class ChangeMaterial : MonoBehaviour
      
     }
 
+    /*
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
@@ -55,4 +56,5 @@ public class ChangeMaterial : MonoBehaviour
 
         }
     }
+    */
 }

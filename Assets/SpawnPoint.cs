@@ -12,7 +12,7 @@ public class SpawnPoint : MonoBehaviour
     
     [SerializeField] private GameObject Player;
 
-    public Vector3 spawnPosition { get; private set; } = Vector3.zero;
+    public static Vector3 spawnPosition { get; private set; } = Vector3.zero;
 
 
 
