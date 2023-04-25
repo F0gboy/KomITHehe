@@ -9,6 +9,8 @@ public class CameraRotation : MonoBehaviour
 
     private Vector3 axis; // the axis of rotation
     private float initialHeight; // the initial height of the camera relative to the target
+    
+    public bool isMoving = false;
 
     void Start()
     {
@@ -25,6 +27,8 @@ public class CameraRotation : MonoBehaviour
 
     void Update()
     {
+        if (!isMoving) return;
+        
         // calculate the new position of the camera
         Quaternion rotation = Quaternion.AngleAxis(speed * Time.deltaTime, axis);
         Vector3 offset = transform.position - target.position;
@@ -56,7 +60,7 @@ public class CameraRotation : MonoBehaviour
         transform.position = target.position + offset;
     }
 
-    void MoveToNextTarget()
+    public void MoveToNextTarget()
     {
         MoveTowardsTarget();
         MoveAwayFromTarget();
