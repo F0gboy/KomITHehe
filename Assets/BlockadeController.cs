@@ -30,13 +30,21 @@ public class BlockadeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            var closestExit = GetClosestExit(_spawnPoint.spawnPosition, exits.ToList());
+            
+            print(closestExit.distance + " " + closestExit.exit.name);
+            
+            var testBlock = Instantiate(testCube, closestExit.exit.transform.position, Quaternion.identity);
+            testBlock.name = "Closest Exit";
+        }
     }
 
     public Exit GetClosestExit(Vector3 start, List<GameObject> exits)
     {
         var closestDist = 0f;
-        var closestExit = new GameObject();
+        GameObject closestExit = null;
         
         foreach (var exit in exits)
         {
