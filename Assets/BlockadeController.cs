@@ -12,6 +12,8 @@ public class BlockadeController : MonoBehaviour
 
     private SpawnPoint _spawnPoint;
 
+    public static Exit closestExit;
+
     public GameObject testCube;
     
     public struct Exit
@@ -32,23 +34,23 @@ public class BlockadeController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            var closestExit = GetClosestExit(_spawnPoint.spawnPosition, exits.ToList());
+            closestExit = GetClosestExit(exits.ToList());
             
             print(closestExit.distance + " " + closestExit.exit.name);
             
-            var testBlock = Instantiate(testCube, closestExit.exit.transform.position, Quaternion.identity);
-            testBlock.name = "Closest Exit";
+            //var testBlock = Instantiate(testCube, closestExit.exit.transform.position, Quaternion.identity);
+            //testBlock.name = "Closest Exit";
         }
     }
 
-    public Exit GetClosestExit(Vector3 start, List<GameObject> exits)
+    public Exit GetClosestExit(List<GameObject> exits)
     {
         var closestDist = 0f;
         GameObject closestExit = null;
         
         foreach (var exit in exits)
         {
-            NavMesh.CalculatePath(start, exit.transform.position, NavMesh.AllAreas, navMeshPath);
+            NavMesh.CalculatePath(SpawnPoint.spawnPosition, exit.transform.position, NavMesh.AllAreas, navMeshPath);
 
             var totalDistance = 0f;
             
@@ -66,6 +68,24 @@ public class BlockadeController : MonoBehaviour
         var exitStruct = new Exit();
         exitStruct.exit = closestExit;
         exitStruct.distance = closestDist;
+
+        return exitStruct;
+    }
+
+    public static Exit GetDistance(GameObject exit)
+    {
+        NavMesh.CalculatePath(SpawnPoint.spawnPosition, exit.transform.position, NavMesh.AllAreas, navMeshPath);
+
+        var totalDistance = 0f;
+            
+        for (int i = 1; i < navMeshPath.corners.Length; i++)
+        {
+            totalDistance += Vector3.Distance(navMeshPath.corners[i - 1], navMeshPath.corners[i]);
+        }
+
+        var exitStruct = new Exit();
+        exitStruct.exit = exit;
+        exitStruct.distance = totalDistance;
 
         return exitStruct;
     }
