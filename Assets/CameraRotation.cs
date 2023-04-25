@@ -6,9 +6,14 @@ public class CameraRotation : MonoBehaviour
     public float speed = 15f; // rotation speed in degrees per second
     public float moveSpeed = 5f; // move speed in units per second
     public float minDistance = 1f; // minimum distance between camera and target
+    public float offsetUp = 0.5f; // offset to move the camera up after moving away from the target
+
 
     private Vector3 axis; // the axis of rotation
     private float initialHeight; // the initial height of the camera relative to the target
+    private float distanceBeforeMove; // the distance between the camera and the target before moving away
+    private bool movingAway = false; // flag to indicate whether the camera is moving away from the target
+
 
     void Start()
     {
@@ -40,6 +45,10 @@ public class CameraRotation : MonoBehaviour
         {
             MoveAwayFromTarget();
         }
+        else if (movingAway && Vector3.Distance(transform.position, target.position) > distanceBeforeMove + 0.1f)
+        {
+            MoveUp();
+        }
     }
 
     void MoveTowardsTarget()
@@ -51,11 +60,21 @@ public class CameraRotation : MonoBehaviour
 
     void MoveAwayFromTarget()
     {
+        movingAway = true;
+        distanceBeforeMove = Vector3.Distance(transform.position, target.position);
+
         Vector3 offset = transform.position - target.position;
-        offset = offset.normalized * (minDistance + 8f);
+        offset = offset.normalized * (minDistance + 0.1f);
         transform.position = target.position + offset;
     }
+    void MoveUp()
+    {
+        Vector3 offset = transform.position - target.position;
+        offset.y += offsetUp;
+        transform.position = target.position + offset;
 
+        movingAway = false;
+    }
     void MoveToNextTarget()
     {
         MoveTowardsTarget();
