@@ -25,7 +25,8 @@ public class SpawnPoint : MonoBehaviour
         _blockadeController = FindObjectOfType<BlockadeController>();
 
         Player.transform.position = RandomSpawnPoint();
-        _blockadeController.StartCreateObstacles();
+        BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
+        print(BlockadeController.closestExit.distance + " " + BlockadeController.closestExit.exit.name);
     }
 
     // Update is called once per frame
@@ -44,7 +45,8 @@ public class SpawnPoint : MonoBehaviour
         _openExitFound.StopSpin();
         
         Player.transform.position = RandomSpawnPoint();
-        _blockadeController.StartCreateObstacles();
+        BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
+        print(BlockadeController.closestExit.distance + " " + BlockadeController.closestExit.exit.name);
     }
     
     private Vector3 RandomSpawnPoint()

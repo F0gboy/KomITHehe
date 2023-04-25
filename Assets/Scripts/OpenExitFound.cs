@@ -20,11 +20,11 @@ public class OpenExitFound : MonoBehaviour
     public Camera playerCam;
     public Camera exitCam;
 
-    CameraRotation _cameraRotation;
+    public CameraRotation _cameraRotation;
 
     private void Start()
     {
-        _cameraRotation = FindObjectOfType<CameraRotation>();
+        //_cameraRotation = FindObjectOfType<CameraRotation>();
 
         exitCam.gameObject.SetActive(false);
         
@@ -81,14 +81,14 @@ public class OpenExitFound : MonoBehaviour
 
     public void ButtonPress()
     {
-        if (lookingAt.exit == Chosen.exit)
+        if (buttonText.text == "Se tætteste")
         {
-            buttonText.text = "Se tætteste";
+            buttonText.text = "Se dit valg";
             lookingAt = Closest;
         }
         else
         {
-            buttonText.text = "Se dit valg";
+            buttonText.text = "Se tætteste";
             lookingAt = Chosen;
         }
         

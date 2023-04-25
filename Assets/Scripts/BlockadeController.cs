@@ -30,23 +30,10 @@ public class BlockadeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        deactivateBlockade();
         navMeshPath = new NavMeshPath();
         _spawnPoint = FindObjectOfType<SpawnPoint>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            StartCoroutine(CreateObstacles());
-            
-            //closestExit = GetClosestExit(exits.ToList());
-            
-            //print(closestExit.distance + " " + closestExit.exit.name);
-        }
-    }
 
     public Exit GetClosestExit(List<GameObject> exits)
     {
@@ -110,72 +97,5 @@ public class BlockadeController : MonoBehaviour
         exitStruct.distance = totalDistance;
 
         return exitStruct;
-    }
-
-    private void deactivateBlockade()
-    {
-        foreach (var blockade in blockades)
-        {
-            blockade.SetActive(false);
-        }
-    }
-    
-    public void StartCreateObstacles()
-    {
-        StartCoroutine(CreateObstacles());
-    }
-    
-    IEnumerator CreateObstacles()
-    {
-        foreach (var blockade in activeBlockade)
-        {
-            blockade.SetActive(false);
-        }
-        
-        activeBlockade.Clear();
-        
-        const float chance = 0.2f;
-
-        foreach (var blockade in blockades)
-        {
-            var rand = Random.Range(0f, 1f);
-            if (rand > chance) continue;
-            
-            activeBlockade.Add(blockade);
-            
-            blockade.SetActive(true);
-        }
-
-        /*
-        // Build the NavMesh sources array, including the obstacles
-        var sources = new List<NavMeshBuildSource>();
-        NavMeshBuilder.CollectSources(obj.GetComponent<Collider>().bounds, 
-            LayerMask.GetMask("Obstacle"), 
-            NavMeshCollectGeometry.PhysicsColliders,
-            0, 
-            new List<NavMeshBuildMarkup>(), 
-            sources);
-
-        // Update the NavMesh asynchronously
-        var operation = NavMeshBuilder.UpdateNavMeshDataAsync(
-            new NavMeshData(NavMesh.AllAreas), // Update the entire NavMesh
-            NavMesh.GetSettingsByID(0), // Use default NavMesh settings
-            sources,
-            obj.GetComponent<Collider>().bounds); // Bounds of the NavMesh to update
-
-        // Wait for the NavMesh update to complete
-        while (!operation.isDone)
-        {
-            yield return null;
-        }
-        */
-
-        closestExit = GetClosestExit(exits.ToList());
-        if (closestExit.exit == null)
-        {
-            StartCoroutine(CreateObstacles());
-            yield break;
-        }
-        print(closestExit.distance + " " + closestExit.exit.name);
     }
 }
