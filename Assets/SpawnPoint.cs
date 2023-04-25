@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    
-    [SerializeField] private GameObject[] ScienceSpawnPoints;
-    [SerializeField] private GameObject[] GangSpawnPoints;
-    
+
     private BlockadeController _blockadeController;
     
-    public List<GameObject> SpawnPoints = new();
+    public GameObject[] SpawnPoints;
     
     [SerializeField] private GameObject Player;
 
@@ -23,13 +20,7 @@ public class SpawnPoint : MonoBehaviour
     void Start()
     {
         _blockadeController = FindObjectOfType<BlockadeController>();
-        
-        foreach (var spawnPoint in ScienceSpawnPoints)
-            SpawnPoints.Add(spawnPoint);
 
-        foreach (var spawnPoint in GangSpawnPoints)
-            SpawnPoints.Add(spawnPoint);
-        
         Player.transform.position = RandomSpawnPoint();
     }
 
@@ -41,7 +32,7 @@ public class SpawnPoint : MonoBehaviour
 
     private Vector3 RandomSpawnPoint()
     {
-       var ChosenSpawn = Random.Range(0, SpawnPoints.Count);
+       var ChosenSpawn = Random.Range(0, SpawnPoints.Length);
        var pos = SpawnPoints[ChosenSpawn].transform.position;
        spawnPosition = pos;
        return pos;
