@@ -36,17 +36,7 @@ public class SpawnPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Player.transform.position = RandomSpawnPoint();
-            
-            var closestExit = _blockadeController.GetClosestExit(spawnPosition, _blockadeController.exits.ToList());
-            
-            print(closestExit.distance + " " + closestExit.exit.name);
-            
-            var testBlock = Instantiate(_blockadeController.testCube, closestExit.exit.transform.position, Quaternion.identity);
-            testBlock.name = "Closest Exit";
-        }
+        if (Input.GetKeyDown(KeyCode.K)) Player.transform.position = RandomSpawnPoint();
     }
 
     private Vector3 RandomSpawnPoint()
