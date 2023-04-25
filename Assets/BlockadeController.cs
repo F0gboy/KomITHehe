@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class BlockadeController : MonoBehaviour
 {
-    public GameObject[] blockade;
+    public GameObject[] blockades;
+    public GameObject[] exits;
     public static NavMeshPath navMeshPath;
 
     private SpawnPoint _spawnPoint;
+
+    public GameObject testCube;
     
     public struct Exit
     {
@@ -26,7 +30,15 @@ public class BlockadeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)) GetClosestExit(_spawnPoint.spawnPosition, )
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            var closestExit = GetClosestExit(_spawnPoint.spawnPosition, exits.ToList());
+            
+            print(closestExit.distance + " " + closestExit.exit.name);
+            
+            var testBlock = Instantiate(testCube, closestExit.exit.transform.position, Quaternion.identity);
+            testBlock.name = "Closest Exit";
+        }
     }
 
     public Exit GetClosestExit(Vector3 start, List<GameObject> exits)
