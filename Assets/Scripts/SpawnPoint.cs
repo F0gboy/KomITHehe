@@ -35,7 +35,7 @@ public class SpawnPoint : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K)) Player.transform.position = RandomSpawnPoint();
     }
 
-    public void RestartLevel()
+    public void RestartLevel(bool respawn = true)
     {
         _openExitFound.SetUiState(false);
         Player.GetComponent<FirstPersonController>().enabled = true;
@@ -50,7 +50,8 @@ public class SpawnPoint : MonoBehaviour
             exit.GetComponent<Udgang>().active = true;
         }
         */
-        
+
+        if (!respawn) return;
         Player.transform.position = RandomSpawnPoint();
         BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
         print(BlockadeController.closestExit.distance + " " + BlockadeController.closestExit.exit.name);

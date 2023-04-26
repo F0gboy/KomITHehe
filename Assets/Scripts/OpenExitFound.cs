@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OpenExitFound : MonoBehaviour
@@ -17,16 +19,23 @@ public class OpenExitFound : MonoBehaviour
     public Button button;
     public TMP_Text buttonText;
     
+    public TMP_Text Titel;
+    public TMP_Text Score;
+
     public Camera playerCam;
     public Camera exitCam;
 
     public CameraRotation _cameraRotation;
+    
+    private SpawnPoint _spawnPoint;
 
     private void Start()
     {
         //_cameraRotation = FindObjectOfType<CameraRotation>();
 
         exitCam.gameObject.SetActive(false);
+        
+        _spawnPoint = FindObjectOfType<SpawnPoint>();
         
         SetUiState(false);
     }
@@ -36,7 +45,21 @@ public class OpenExitFound : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             if (transform.GetChild(i).name == "Timer") continue;
+            
             transform.GetChild(i).gameObject.SetActive(state);
+        }
+
+        if (Closest.exit == Chosen.exit)
+        {
+            Titel.color = Color.green;
+            Titel.text = "Du fandt udgangen!";
+            Score.text = "Score: " + (Chosen.distance / Timer.time).ToString("F2");
+        }
+        else
+        {
+            Score.enabled = false;
+            Titel.color = Color.red;
+            Titel.text = "Du fandt en udgang!";
         }
     }
 
@@ -98,6 +121,15 @@ public class OpenExitFound : MonoBehaviour
         }
         
         SetRotaionTarget();
+    }
+
+    public void BackToMain()
+    {
+        _spawnPoint.RestartLevel(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        SceneManager.LoadScene(0);
     }
 
     private void SetRotaionTarget()
