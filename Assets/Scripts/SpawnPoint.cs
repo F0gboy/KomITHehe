@@ -43,6 +43,13 @@ public class SpawnPoint : MonoBehaviour
         Cursor.visible = false;
         
         _openExitFound.StopSpin();
+
+        /*
+        foreach (var exit in _blockadeController.exits.Where(x => !x.GetComponent<Udgang>().active))
+        {
+            exit.GetComponent<Udgang>().active = true;
+        }
+        */
         
         Player.transform.position = RandomSpawnPoint();
         BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
@@ -51,6 +58,7 @@ public class SpawnPoint : MonoBehaviour
     
     private Vector3 RandomSpawnPoint()
     {
+        Timer.timerActive = true;
        var ChosenSpawn = Random.Range(0, SpawnPoints.Length);
        var pos = SpawnPoints[ChosenSpawn].transform.position;
        spawnPosition = pos;

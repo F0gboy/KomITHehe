@@ -49,7 +49,7 @@ public class BlockadeController : MonoBehaviour
     
         var exitStruct = new Exit();
         exitStruct.exit = closestExit;
-        exitStruct.distance = Vector3.Distance(SpawnPoint.spawnPosition, closestExit.transform.position);
+        exitStruct.distance = GetDistance(closestExit).distance;
 
         return exitStruct;
         

@@ -35,6 +35,7 @@ public class OpenExitFound : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
+            if (transform.GetChild(i).name == "Timer") continue;
             transform.GetChild(i).gameObject.SetActive(state);
         }
     }
@@ -43,6 +44,8 @@ public class OpenExitFound : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        Timer.timerActive = false;
         
         exitCam.gameObject.SetActive(true);
         playerCam.gameObject.SetActive(false);
@@ -64,13 +67,15 @@ public class OpenExitFound : MonoBehaviour
 
             if (transform.GetChild(i).name == "Valgte")
             {
-                text.text += $"{chosen.distance:F}";
+                text.text = $"Din valgte udgang: {chosen.distance}";
             }
             else if (transform.GetChild(i).name == "Faktiske")
             {
-                text.text += $"{closest.distance:F}";
+                text.text = $"Den tætteste udgang: {closest.distance}";
             }
         }
+
+        //closest.exit.GetComponent<Udgang>().active = false;
     }
 
     public void StopSpin()
