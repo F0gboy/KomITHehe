@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,7 @@ public class Timer : MonoBehaviour
 {
     public static bool timerActive = false;
     public static float time = 0;
+    private bool updated;
 
     private TMP_Text text;
     
@@ -16,6 +18,15 @@ public class Timer : MonoBehaviour
         StartCoroutine(Counter());
     }
 
+    private void Update()
+    {
+        if (time == 0 && !timerActive && !updated)
+        {
+            updated = true;
+            UpdateText();
+        }
+    }
+
     IEnumerator Counter()
     {
         while (true)
@@ -23,6 +34,7 @@ public class Timer : MonoBehaviour
             yield return new WaitForSeconds(1);
             if (timerActive)
             {
+                if (updated) updated = false;
                 time++;
                 UpdateText();
             }

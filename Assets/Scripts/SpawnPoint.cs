@@ -51,7 +51,7 @@ public class SpawnPoint : MonoBehaviour
         }
         */
 
-        if (!respawn) return;
+        if (respawn) return;
         Player.transform.position = RandomSpawnPoint();
         BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
         print(BlockadeController.closestExit.distance + " " + BlockadeController.closestExit.exit.name);
@@ -59,7 +59,13 @@ public class SpawnPoint : MonoBehaviour
     
     private Vector3 RandomSpawnPoint()
     {
-        Timer.timerActive = true;
+        if (OpenExitFound.CorrectExit)
+        {
+            OpenExitFound.CorrectExit = false;
+            Timer.time = 0;
+        }
+        
+       Timer.timerActive = true;
        var ChosenSpawn = Random.Range(0, SpawnPoints.Length);
        var pos = SpawnPoints[ChosenSpawn].transform.position;
        spawnPosition = pos;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,8 @@ public class OpenExitFound : MonoBehaviour
     private BlockadeController.Exit Chosen;
 
     private BlockadeController.Exit lookingAt;
+
+    public static bool CorrectExit = false;
     
     public Button button;
     public TMP_Text buttonText;
@@ -53,7 +56,10 @@ public class OpenExitFound : MonoBehaviour
         {
             Titel.color = Color.green;
             Titel.text = "Du fandt udgangen!";
+
+            Score.enabled = true;
             Score.text = "Score: " + (Chosen.distance / Timer.time).ToString("F2");
+            CorrectExit = true;
         }
         else
         {
