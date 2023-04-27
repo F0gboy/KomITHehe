@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,7 +38,9 @@ public class BlockadeController : MonoBehaviour
 
     public Exit GetClosestExit(List<GameObject> exits)
     {
-        var closestExit = exits.OrderBy(e => {
+        var newExits = exits.Where(e => e.GetComponent<Udgang>().active);
+        
+        var closestExit = newExits.OrderBy(e => {
             NavMesh.CalculatePath(SpawnPoint.spawnPosition, e.transform.position, NavMesh.AllAreas, navMeshPath);
             var totalDistance = 0f;
             for (int i = 1; i < navMeshPath.corners.Length; i++)
