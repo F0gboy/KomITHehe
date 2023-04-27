@@ -9024,6 +9024,7 @@ MonoBehaviour:
   valgt: {fileID: 910519359}
   faktisk: {fileID: 1083553133}
   wall: {fileID: 210939195}
+  switchView: {fileID: 1364402311}
   playerCam: {fileID: 1658144141}
   exitCam: {fileID: 1944214967}
   _cameraRotation: {fileID: 1944214969}

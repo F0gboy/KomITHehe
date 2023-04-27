@@ -29,6 +29,7 @@ public class OpenExitFound : MonoBehaviour
     public TMP_Text faktisk;
     
     public GameObject wall;
+    public GameObject switchView;
 
     public Camera playerCam;
     public Camera exitCam;
@@ -101,6 +102,8 @@ public class OpenExitFound : MonoBehaviour
         Timer.timerActive = false;
         
         wall.SetActive(false);
+
+        switchView.GetComponent<Animation>().Play();
         
         exitCam.gameObject.SetActive(true);
         playerCam.gameObject.SetActive(false);
@@ -139,6 +142,8 @@ public class OpenExitFound : MonoBehaviour
             buttonText.text = "Se tætteste";
             lookingAt = Chosen;
         }
+
+        if (switchView.GetComponent<Animation>().isPlaying) switchView.GetComponent<Animation>().Stop();
         
         SetRotaionTarget();
     }
