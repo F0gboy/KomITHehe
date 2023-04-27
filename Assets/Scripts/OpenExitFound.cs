@@ -27,6 +27,8 @@ public class OpenExitFound : MonoBehaviour
     
     public TMP_Text valgt;
     public TMP_Text faktisk;
+    
+    public GameObject wall;
 
     public Camera playerCam;
     public Camera exitCam;
@@ -97,6 +99,8 @@ public class OpenExitFound : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         Timer.timerActive = false;
+        
+        wall.SetActive(false);
         
         exitCam.gameObject.SetActive(true);
         playerCam.gameObject.SetActive(false);
