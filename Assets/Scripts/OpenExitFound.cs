@@ -95,6 +95,8 @@ public class OpenExitFound : MonoBehaviour
 
             CorrectExit = false;
         }
+        
+        button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Se tætteste";
     }
 
     public void OpenUi(BlockadeController.Exit closest, BlockadeController.Exit chosen)
