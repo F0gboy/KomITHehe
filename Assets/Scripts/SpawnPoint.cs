@@ -52,7 +52,13 @@ public class SpawnPoint : MonoBehaviour
         */
 
         if (respawn) return;
-        Player.transform.position = RandomSpawnPoint();
+        
+        if (OpenExitFound.CorrectExit) Player.transform.position = RandomSpawnPoint();
+        else
+        {
+            Player.transform.position = spawnPosition;
+            Timer.timerActive = true;
+        }
         BlockadeController.closestExit = _blockadeController.GetClosestExit(_blockadeController.exits.ToList());
         print(BlockadeController.closestExit.distance + " " + BlockadeController.closestExit.exit.name);
     }

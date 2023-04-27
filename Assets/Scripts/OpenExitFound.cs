@@ -24,11 +24,16 @@ public class OpenExitFound : MonoBehaviour
     
     public TMP_Text Titel;
     public TMP_Text Score;
+    
+    public TMP_Text valgt;
+    public TMP_Text faktisk;
 
     public Camera playerCam;
     public Camera exitCam;
 
     public CameraRotation _cameraRotation;
+
+    private List<GameObject> wrongExits = new ();
     
     private SpawnPoint _spawnPoint;
 
@@ -54,18 +59,35 @@ public class OpenExitFound : MonoBehaviour
 
         if (Closest.exit == Chosen.exit)
         {
+            foreach (var exit in wrongExits)
+            {
+                var udgang = exit.GetComponent<Udgang>();
+                udgang.active = true;
+                udgang.col.SetActive(false);
+            }
+            
+            wrongExits.Clear();
+            
             Titel.color = Color.green;
-            Titel.text = "Du fandt udgangen!";
+            Titel.text = "Du fandt den tætteste udgang!";
 
             Score.enabled = true;
-            Score.text = "Score: " + (Chosen.distance / Timer.time).ToString("F2");
+            Score.text = "Score: " + (Chosen.distance / Timer.time * 100).ToString("F2");
             CorrectExit = true;
         }
         else
         {
+            var udgang = Chosen.exit.GetComponent<Udgang>();
+
+            wrongExits.Add(udgang.gameObject);
+            udgang.active = false;
+            udgang.col.SetActive(true);
+            
             Score.enabled = false;
             Titel.color = Color.red;
-            Titel.text = "Du fandt en udgang!";
+            Titel.text = "Du fandt ikke den tætteste udgang";
+
+            CorrectExit = false;
         }
     }
 
@@ -90,20 +112,8 @@ public class OpenExitFound : MonoBehaviour
         
         SetUiState(true);
 
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            var text = transform.GetChild(i).GetComponent<TMP_Text>();
-
-            if (transform.GetChild(i).name == "Valgte")
-            {
-                text.text = $"Din valgte udgang: {chosen.distance}";
-            }
-            else if (transform.GetChild(i).name == "Faktiske")
-            {
-                text.text = $"Den tætteste udgang: {closest.distance}";
-            }
-        }
-
+        valgt.text = $"Din valgte udgang: {chosen.distance:F2}";
+        faktisk.text = $"Den tætteste udgang: {closest.distance:F2}";
         //closest.exit.GetComponent<Udgang>().active = false;
     }
 
