@@ -37,6 +37,7 @@ public class SpawnPoint : MonoBehaviour
 
     public void RestartLevel(bool respawn = true)
     {
+        _openExitFound.wall.SetActive(true);
         _openExitFound.SetUiState(false);
         Player.GetComponent<FirstPersonController>().enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
