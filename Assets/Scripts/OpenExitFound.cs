@@ -69,6 +69,7 @@ public class OpenExitFound : MonoBehaviour
                 udgang.col.SetActive(false);
             }
             
+            switchView.SetActive(false);
             wrongExits.Clear();
             
             Titel.color = Color.green;
@@ -82,6 +83,8 @@ public class OpenExitFound : MonoBehaviour
         {
             var udgang = Chosen.exit.GetComponent<Udgang>();
 
+            switchView.SetActive(state);
+            
             wrongExits.Add(udgang.gameObject);
             udgang.active = false;
             udgang.col.SetActive(true);
@@ -103,7 +106,7 @@ public class OpenExitFound : MonoBehaviour
         
         wall.SetActive(false);
 
-        switchView.GetComponent<Animation>().Play();
+        if (switchView.activeInHierarchy) switchView.GetComponent<Animation>().Play();
         
         exitCam.gameObject.SetActive(true);
         playerCam.gameObject.SetActive(false);
@@ -143,7 +146,11 @@ public class OpenExitFound : MonoBehaviour
             lookingAt = Chosen;
         }
 
-        if (switchView.GetComponent<Animation>().isPlaying) switchView.GetComponent<Animation>().Stop();
+        if (switchView.GetComponent<Animation>().isPlaying)
+        {
+            switchView.GetComponent<Animation>().Stop();
+            switchView.GetComponent<Image>().color = Color.white;
+        }
         
         SetRotaionTarget();
     }
