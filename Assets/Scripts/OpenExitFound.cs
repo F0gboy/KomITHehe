@@ -69,10 +69,10 @@ public class OpenExitFound : MonoBehaviour
             wrongExits.Clear();
             
             Titel.color = Color.green;
-            Titel.text = "Du fandt udgangen!";
+            Titel.text = "Du fandt den tætteste udgang!";
 
             Score.enabled = true;
-            Score.text = "Score: " + (Chosen.distance / Timer.time).ToString("F2");
+            Score.text = "Score: " + (Chosen.distance / Timer.time * 100).ToString("F2");
             CorrectExit = true;
         }
         else
@@ -85,7 +85,7 @@ public class OpenExitFound : MonoBehaviour
             
             Score.enabled = false;
             Titel.color = Color.red;
-            Titel.text = "Du fandt en udgang!";
+            Titel.text = "Du fandt ikke den tætteste udgang";
 
             CorrectExit = false;
         }
