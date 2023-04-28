@@ -12,10 +12,13 @@ public class Timer : MonoBehaviour
 
     private TMP_Text text;
     
+    private SpawnPoint _spawnPoint;
+    
     void Start()
     {
         text = GetComponent<TMP_Text>();
         StartCoroutine(Counter());
+        _spawnPoint = FindObjectOfType<SpawnPoint>();
     }
 
     private void Update()
@@ -35,6 +38,9 @@ public class Timer : MonoBehaviour
             if (timerActive)
             {
                 if (updated) updated = false;
+                
+                _spawnPoint.Player.GetComponent<AudioSource>().Play();
+                
                 time++;
                 UpdateText();
             }

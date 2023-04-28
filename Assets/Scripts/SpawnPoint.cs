@@ -10,7 +10,7 @@ public class SpawnPoint : MonoBehaviour
     
     public GameObject[] SpawnPoints;
     
-    [SerializeField] private GameObject Player;
+    [SerializeField] public GameObject Player;
     
     private OpenExitFound _openExitFound;
 
